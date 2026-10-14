@@ -1,0 +1,65 @@
+{
+  "info": {
+    "name": "Employee Leave Management Backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {"key": "baseUrl", "value": "http://127.0.0.1:8000"},
+    {"key": "token", "value": ""},
+    {"key": "leaveId", "value": "1"}
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {"method": "GET", "url": "{{baseUrl}}/health"}
+    },
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {"mode": "raw", "raw": "{"employee_code":"EMP001","name":"Aboli Shejul","email":"aboli@example.com","password":"Password123!","department":"Engineering","designation":"Software Engineer","joining_date":"2025-04-01","role":"EMPLOYEE"}"},
+        "url": "{{baseUrl}}/auth/register"
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "body": {"mode": "urlencoded", "urlencoded": [
+          {"key": "username", "value": "aboli@example.com"},
+          {"key": "password", "value": "Password123!"}
+        ]},
+        "url": "{{baseUrl}}/auth/login"
+      }
+    },
+    {
+      "name": "Apply Leave",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{token}}"},
+          {"key": "Content-Type", "value": "application/json"}
+        ],
+        "body": {"mode": "raw", "raw": "{"leave_type":"CASUAL","start_date":"2026-11-02","end_date":"2026-11-03","reason":"Personal work"}"},
+        "url": "{{baseUrl}}/leave-requests"
+      }
+    },
+    {
+      "name": "My Leaves",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+        "url": "{{baseUrl}}/leave-requests"
+      }
+    },
+    {
+      "name": "Leave Summary",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+        "url": "{{baseUrl}}/reports/leave-summary"
+      }
+    }
+  ]
+}
